@@ -1,7 +1,7 @@
 import { CreateProductDto } from '@app/general';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { UpdateProductDto } from '../../../libs/general/src/dto/product/update-product.dto';
 import { Product } from './model/product.model';
 
 @Injectable()
@@ -32,8 +32,8 @@ export class ProductService {
         return this.productWriteModel.update(data as any, { where: { id } });
     }
 
-    async deleteProduct(id: number): Promise<void> {
-        await this.productWriteModel.destroy({ where: { id } });
+    async deleteProduct(id: number): Promise<number> {
+        return this.productWriteModel.destroy({ where: { id } });
     }
 
 }

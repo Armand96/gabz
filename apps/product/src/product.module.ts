@@ -4,31 +4,25 @@ import { ProductService } from './product.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Product } from './model/product.model';
-import { join } from 'path';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            // envFilePath: join(__dirname, '/apps/product/.env'),
-            isGlobal: true,
+            envFilePath: process.env.NODE_ENV ? `./apps/product/.env.${process.env.NODE_ENV}` : './apps/product/.env',
         }),
         SequelizeModule.forRootAsync({
             imports: [ConfigModule],
             name: 'writeConnection',
             useFactory: (configService: ConfigService) => ({
                 dialect: 'mysql',
-                // host: configService.get('DB_WRITE_HOST'),
-                // port: parseInt(configService.get('DB_WRITE_PORT'), 10),
-                // username: configService.get('DB_WRITE_USERNAME'),
-                // password: configService.get('DB_WRITE_PASSWORD'),
-                // database: configService.get('DB_WRITE_NAME'),
-                host: configService.get('DB_WRITE_HOST', 'localhost'),
-                port: parseInt(configService.get('DB_WRITE_PORT', '3307'), 10),
-                username: configService.get('DB_WRITE_USERNAME', 'product_user'),
-                password: configService.get('DB_WRITE_PASSWORD', 'developer'),
-                database: configService.get('DB_WRITE_NAME', 'product_write_db'),
+                host: configService.get('DB_WRITE_HOST'),
+                port: parseInt(configService.get('DB_WRITE_PORT'), 10),
+                username: configService.get('DB_WRITE_USERNAME'),
+                password: configService.get('DB_WRITE_PASSWORD'),
+                database: configService.get('DB_WRITE_NAME'),
                 models: [Product],
                 autoLoadModels: true,
+                timezone: "+07:00",
                 synchronize: true, // Disable this in production
             }),
             inject: [ConfigService],
@@ -38,17 +32,13 @@ import { join } from 'path';
             name: 'readConnection',
             useFactory: (configService: ConfigService) => ({
                 dialect: 'mysql',
-                // host: configService.get('DB_READ_HOST', 'localhost'),
-                // port: parseInt(configService.get('DB_READ_PORT', '33017'), 10),
-                // username: configService.get('DB_READ_USERNAME', 'product_user'),
-                // password: configService.get('DB_READ_PASSWORD', 'developer'),
-                // database: configService.get('DB_READ_NAME', 'product_read_db'),
                 host: configService.get('DB_READ_HOST'),
                 port: parseInt(configService.get('DB_READ_PORT'), 10),
                 username: configService.get('DB_READ_USERNAME'),
                 password: configService.get('DB_READ_PASSWORD'),
                 database: configService.get('DB_READ_NAME'),
                 models: [Product],
+                timezone: "+07:00",
                 autoLoadModels: true,
                 synchronize: false, // Read-only; no need to sync models
             }),
