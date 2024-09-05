@@ -1,2 +1,1 @@
-export * from './general.module';
-export * from './general.service';
+export * from './dto/product';

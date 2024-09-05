@@ -3,7 +3,7 @@ import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
 
 @Module({
-  imports: [],
+  imports: [ApiGatewayModule],
   controllers: [ApiGatewayController],
   providers: [ApiGatewayService],
 })
