@@ -7,4 +7,7 @@ export class Product extends Model {
 
     @Column
     sku: string;
+
+    @Column
+    price: number;
 }
