@@ -3,6 +3,7 @@ import { ApiGatewayController } from './api-gateway.controller';
 import { ApiGatewayService } from './api-gateway.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ProductsController } from './products/products.controller';
+import { ResponseDto } from './response.dto';
 
 @Module({
   imports: [
@@ -16,6 +17,6 @@ import { ProductsController } from './products/products.controller';
     ]),
   ],
   controllers: [ApiGatewayController, ProductsController],
-  providers: [ApiGatewayService],
+  providers: [ApiGatewayService, ResponseDto],
 })
 export class ApiGatewayModule { }
