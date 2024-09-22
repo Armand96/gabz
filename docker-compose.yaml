@@ -17,7 +17,7 @@ services:
     command: npm run start:dev product
     env_file:
       - ./apps/product/.env
-    ports:
-      - '3001:3001'
     volumes:
       - .:/usr/src/app
+    deploy:
+      replicas: 2  # Scale horizontally
