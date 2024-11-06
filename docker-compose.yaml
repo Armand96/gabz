@@ -11,6 +11,8 @@ services:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+    networks:
+      - gabz-network
     deploy: 
       replicas: 1
       update_config: 
@@ -30,6 +32,8 @@ services:
       - ./apps/product/.env
     volumes:
       - .:/usr/src/app
+    networks:
+      - gabz-network
     deploy:
       replicas: 2  # Scale horizontally
       update_config:
@@ -47,12 +51,18 @@ services:
       MYSQL_DATABASE: product_read_db
       MYSQL_USER: dev
       MYSQL_PASSWORD: password
+    networks:
+      - gabz-network
     volumes:
       - mysql_data:/var/lib/mysql
       # - .docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh  # Add custom initialization script
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager  # Optional: restricts MySQL to manager nodes
 
 volumes:
   mysql_data:
 networks:
   gabz-network:
-    driver: bridge
+    driver: overlay
