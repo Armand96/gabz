@@ -1,6 +1,6 @@
 services:
   api-gateway:
-    image: gabz/api-gateway:v1
+    image: armand96/gabz:api-gateway-v1
     build:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
@@ -19,7 +19,7 @@ services:
       restart_policy:
         condition: on-failure
   product:
-    image: gabz/product:v1
+    image: armand96/gabz:product-v1
     build:
       context: .
       dockerfile: ./apps/product/Dockerfile
