@@ -20,6 +20,8 @@ services:
         condition: on-failure
   product:
     image: armand96/gabz:product-v1
+    depends_on:
+      - mysql
     build:
       context: .
       dockerfile: ./apps/product/Dockerfile
@@ -35,3 +37,22 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+  mysql:
+    image: mysql
+    container_name: mysql
+    ports:
+      - '3307:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: product_read_db
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # - .docker/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh  # Add custom initialization script
+
+volumes:
+  mysql_data:
+networks:
+  gabz-network:
+    driver: bridge
