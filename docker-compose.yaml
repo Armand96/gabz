@@ -11,6 +11,13 @@ services:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+    deploy: 
+      replicas: 1
+      update_config: 
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
   product:
     image: gabz/product:v1
     build:
@@ -23,3 +30,8 @@ services:
       - .:/usr/src/app
     deploy:
       replicas: 2  # Scale horizontally
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
