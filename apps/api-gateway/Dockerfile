@@ -12,6 +12,6 @@ RUN npm install
 COPY apps/api-gateway apps/api-gateway
 COPY libs libs
 
-RUN npm run build
+RUN npm run build api-gateway
 
 CMD ["node", "dist/apps/api-gateway/main"]

@@ -1,9 +1,10 @@
 services:
   api-gateway:
+    image: gabz/api-gateway:v1
     build:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
-    command: npm run start:dev api-gateway
+    # command: npm run start:dev api-gateway
     env_file:
       - ./apps/api-gateway/.env
     ports:
@@ -11,10 +12,11 @@ services:
     volumes:
       - .:/usr/src/app
   product:
+    image: gabz/product:v1
     build:
       context: .
       dockerfile: ./apps/product/Dockerfile
-    command: npm run start:dev product
+    # command: npm run start:dev product
     env_file:
       - ./apps/product/.env
     volumes:
